@@ -3,19 +3,17 @@ package database
 import (
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
-
-	"github.com/VSarcher/WebThumbnailGenerator/internal/models"
 )
+
+var DB *gorm.DB
 
 func ConnectDB() error {
 	db, err := gorm.Open(sqlite.Open("image.db"), &gorm.Config{})
+
+	DB = db
 	if err != nil {
-		// panic("failed to connect database")
 		return err
 	}
 
-	db.AutoMigrate(&models.ImageInfo{})
-	//initial model
-	db.Create(&models.ImageInfo{Url: "google.com", Name: "Google"})
 	return nil
 }
